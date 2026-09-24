@@ -1,6 +1,6 @@
 # Plugin integration reference
 
-This repository is independently buildable and intentionally does not import the Snowball middleware checkout. Its local `vendor/snowball-plugin-sdk-0.1.0.tgz` is the exact prerelease protocol dependency in `package-lock.json`; it is not a registry release.
+This repository is independently buildable and intentionally does not import the Snowball middleware checkout. Its local `vendor/snowball-plugin-sdk-0.1.0.tgz` is the exact prerelease protocol dependency in `package-lock.json`; it is not a registry release. Release tarballs also bundle the installed SDK because npm cannot resolve a nested `file:vendor/...` dependency in a consumer project.
 
 Start with `src/manifest.ts` to see the plugin ID, kind, reviewed worker entrypoint, integrity digest and explicitly declared operations. The middleware's PluginHost validates the manifest, checks the entrypoint digest, starts `src/worker.ts` without a shell, performs `plugin.initialize`, and dispatches only declared JSON-RPC operations. `tests/protocol.test.mjs` demonstrates the independent handshake and EOF cleanup. Provider tests in `tests/adapter.test.mjs`, where present, test provider data separately.
 
