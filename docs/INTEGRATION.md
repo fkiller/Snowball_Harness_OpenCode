@@ -1,0 +1,9 @@
+# Plugin integration reference
+
+This repository is independently buildable and intentionally does not import the Snowball middleware checkout. Its local `vendor/snowball-plugin-sdk-0.1.0.tgz` is the exact prerelease protocol dependency in `package-lock.json`; it is not a registry release.
+
+Start with `src/manifest.ts` to see the plugin ID, kind, reviewed worker entrypoint, integrity digest and explicitly declared operations. The middleware's PluginHost validates the manifest, checks the entrypoint digest, starts `src/worker.ts` without a shell, performs `plugin.initialize`, and dispatches only declared JSON-RPC operations. `tests/protocol.test.mjs` demonstrates the independent handshake and EOF cleanup. Provider tests in `tests/adapter.test.mjs`, where present, test provider data separately.
+
+The adapter in `src/index.ts` translates provider-specific identity, sessions, model catalog and events into the SDK contract. A listed or discovered session is read-only until the middleware explicitly attaches an owner to that exact instance/session. Commands go through the middleware's local API and durable command journal, never directly from a device plugin to a harness. Do not claim create/send/decision/interrupt operations in a new manifest until real-provider receipts and failure behavior have been verified for each operation.
+
+Run `npm ci --ignore-scripts` and `npm test` on a supported Node version (>=22.12). GitHub Actions checks both Windows and macOS builds. Those CI checks validate portable protocol/fixture behavior; they do not constitute native provider, hardware or end-user installation acceptance. The repo is private and UNLICENSED pending the owner's license decision.
