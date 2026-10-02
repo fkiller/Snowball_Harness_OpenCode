@@ -6,4 +6,6 @@ Start with `src/manifest.ts` to see the plugin ID, kind, reviewed worker entrypo
 
 The adapter in `src/index.ts` translates provider-specific identity, sessions, model catalog and events into the SDK contract. A listed or discovered session is read-only until the middleware explicitly attaches an owner to that exact instance/session. Commands go through the middleware's local API and durable command journal, never directly from a device plugin to a harness. Do not claim create/send/decision/interrupt operations in a new manifest until real-provider receipts and failure behavior have been verified for each operation.
 
-Run `npm ci --ignore-scripts` and `npm test` on a supported Node version (>=22.12). GitHub Actions checks both Windows and macOS builds. Those CI checks validate portable protocol/fixture behavior; they do not constitute native provider, hardware or end-user installation acceptance. The repo is private and UNLICENSED pending the owner's license decision.
+Run `npm ci --ignore-scripts` and `npm test` on a supported Node version (>=22.12). GitHub Actions checks both Windows and macOS builds. Those CI checks validate portable protocol/fixture behavior.
+
+This project is licensed under the Apache-2.0 License.

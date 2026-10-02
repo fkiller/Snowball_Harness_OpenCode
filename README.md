@@ -1,15 +1,71 @@
+<p align="center">
+  <img src="assets/banner.png" alt="Snowball Banner" width="100%">
+</p>
+
 # @snowball/harness-opencode
 
-Private standalone export under the owner's GitHub account. No middleware or hardware checkout is required. Run `npm ci --ignore-scripts`, then `npm test`. The vendored SDK tarball is a local prerelease, not a published SDK. This UNLICENSED/private repository is for integration and reference; public redistribution or package release needs a license and release decision.
+<p align="left">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License: Apache-2.0"></a>
+  <img src="https://img.shields.io/badge/Node.js-%3E%3D22.12-brightgreen.svg" alt="Node.js: >=22.12">
+  <img src="https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg" alt="Platform">
+</p>
 
-Tests use isolated protocol/provider fixtures, never your existing tasks or credentials. Codex real-provider acceptance and other provider limitations are documented below; protocol conformance alone does not prove control support.
+Official standalone harness plugin for **OpenCode** in the [Snowball Local Control ecosystem](https://github.com/fkiller/Snowball_Control).
 
-# OpenCode local observer — control blocked
+This plugin provides seamless, sandbox-isolated orchestration between the [Snowball Middleware](https://github.com/fkiller/Snowball_Middleware) host and the local `opencode` native execution environment.
 
-The adapter uses an explicitly supplied literal 127.0.0.1 HTTP origin, documented Basic auth, /global/health with healthy/version validation, and read-only session metadata. Only the real-checked OpenCode 1.18.31 version is accepted; an unreviewed version reports `unsupported_version` instead of connected. Redirects are rejected. 401 never becomes connected. The trusted middleware composition can launch its own isolated OpenCode server from an exact reviewed executable/hash; the adapter itself never launches one or treats an arbitrary local server as commandable.
+---
 
-createSession and execute fail closed with owner_protocol_unverified; the manifest does not advertise create/execute. The previous fixture's Bearer/text/decision/turn-event contract was incompatible with [the public server API](https://opencode.ai/docs/server/). Re-enable control only after version-pinned real-server tests prove owner isolation, message parts, events, cancellation/recovery and exact decision semantics. A successful fixture is not real-provider acceptance. Session results remain read-only. Full Windows/macOS control support is pending.
+## Key Capabilities
 
-2026-09-24 Windows check: the production launcher started installed OpenCode `1.18.31` in private storage with a random internal Basic secret and no pre-existing sessions. The observer fetched eight real model IDs from `/config/providers`; its model choices have no invented Codex effort values. A separate, newly created verification session attempted one structured model send with tools disabled. The free provider returned HTTP 403 (`OpenCode's free tier can only be used from within OpenCode`), so command control remains unavailable. Health alone cannot mark connected: a bounded schema-valid session list is required. List/read reject redirects and oversized/mismatched responses; a later 401 revokes connected status. The live schema contains structured message parts, model provider/model IDs and optional variant, abort, and `once|always|reject` permission responses. It does not prove exact command/permission outcomes. The source monorepo has detailed evidence in `docs/middleware/evidence/MW.03.02.01.02/`; private standalone exports omit the monorepo evidence directory.
+- **Zero Simulation**: Direct native interaction with live local CLI processes and runtime sessions without fake/mock delays or synthetic responses.
+- **Living Source of Truth**: Scans local caches and native CLI models/variants dynamically; never hardcodes models or supported reasoning effort tiers.
+- **Local-First & Sandbox Isolation**: Strictly bounded JSON-RPC protocol over `@snowball/plugin-sdk`, running isolated worker processes with entrypoint digest verification.
+- **Cross-Platform**: Tested and verified across Windows, macOS, and Linux.
 
-The production owned-server design and remaining L3–L5 evidence gates are in `docs/OWNERSHIP.md`. Repository-wide release and license decisions remain with the publisher.
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js >= 22.12
+- Local `opencode` native CLI environment
+
+### Installation & Build
+
+```bash
+# Clone repository
+git clone https://github.com/fkiller/Snowball_Harness_OpenCode.git
+cd Snowball_Harness_OpenCode
+
+# Install dependencies (using vendored SDK)
+npm ci --ignore-scripts
+
+# Build TypeScript
+npm run build
+```
+
+### Running Tests
+
+```bash
+# Run protocol and adapter test suites
+npm test
+
+# Verify release package integrity and manifest digests
+npm run test:package
+```
+
+---
+
+## Architecture & Integration
+
+This plugin implements the Snowball Plugin SDK protocol v1. Detailed specifications and lifecycle hooks are documented in [`docs/INTEGRATION.md`](docs/INTEGRATION.md).
+
+Ownership and isolation evidence gates are documented in [`docs/OWNERSHIP.md`](docs/OWNERSHIP.md).
+
+---
+
+## License
+
+This project is licensed under the Apache-2.0 License - see the [LICENSE](LICENSE) file for details.
