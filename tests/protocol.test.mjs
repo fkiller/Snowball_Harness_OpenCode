@@ -40,6 +40,7 @@ test('plugin owns a bounded native breadcrumb glyph and full display name', asyn
   assert.equal(manifest.presentation.name, 'OpenCode');
   assert.equal(manifest.presentation.icon.size, 16);
   assert.equal(manifest.presentation.icon.rows.length, 16);
+  assert.equal(Buffer.from(manifest.presentation.icon.rgb565, 'base64').length, 512);
   assert.ok(manifest.presentation.icon.rows.every(row => Number.isInteger(row) && row >= 0 && row <= 65535));
   assert.ok(Object.isFrozen(manifest.presentation.icon.rows));
 });
