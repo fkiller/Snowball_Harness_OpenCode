@@ -1,3 +1,4 @@
+import { harnessPresentation } from './presentation.js';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { parseManifest } from '@snowball/plugin-sdk';
@@ -6,7 +7,7 @@ import { parseManifest } from '@snowball/plugin-sdk';
 export async function opencodeManifest() {
   return parseManifest({
     id: 'snowball.opencode',
-    publisher: 'Snowball',
+    publisher: 'Snowball', presentation: harnessPresentation,
     version: '0.1.0',
     kind: 'harness',
     sdkApiRange: '^1.0.0',

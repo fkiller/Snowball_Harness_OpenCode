@@ -34,3 +34,12 @@ test('independent worker uses SDK protocol and exits on EOF without launching a 
     if (child.exitCode === null) child.kill();
   }
 });
+
+test('plugin owns a bounded native breadcrumb glyph and full display name', async () => {
+  const manifest = await opencodeManifest();
+  assert.equal(manifest.presentation.name, 'OpenCode');
+  assert.equal(manifest.presentation.icon.size, 16);
+  assert.equal(manifest.presentation.icon.rows.length, 16);
+  assert.ok(manifest.presentation.icon.rows.every(row => Number.isInteger(row) && row >= 0 && row <= 65535));
+  assert.ok(Object.isFrozen(manifest.presentation.icon.rows));
+});
