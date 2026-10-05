@@ -239,3 +239,5 @@ export class OpenCodeOwnedAdapter extends EventEmitter implements DispatchPort {
     this.emit('offline', { ownerId: this.ownerId });
   }
 }
+
+export { harnessPresentation } from './presentation.js';
